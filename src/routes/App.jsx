@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from '../pages/HomePage.jsx'
+import CreateTask from '../pages/CreateTask.jsx'
 
 const App = () => {
   return (
@@ -7,7 +8,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/create-task" element={<HomePage />} />
+        <Route path="/create-task" element={<CreateTask />} />
         <Route path="*" element={<p>Pagina no encontrada</p>} />
       </Routes>
     </BrowserRouter>
