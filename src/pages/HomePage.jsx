@@ -22,6 +22,15 @@ const HomePage = () => {
     fetchTask();
   }, []);
 
+  const handleDelete = async (id) =>{
+    try{
+      await axiosPublic.delete(`/task/${id}`);
+        setTask((prev)=> prev.filter((t) => t.id !== id));
+    }catch(err){
+      console.log('error al eliminar la tarea')
+    }
+  };
+
   if (loading) return <div className="text-center p-8 text-lg">Cargando tareas...</div>;
   if (error) return <div className="text-center p-8 text-red-500 font-semibold">Error: {error}</div>;
 
@@ -38,14 +47,24 @@ const HomePage = () => {
               <h2 className="font-bold text-xl text-gray-800">{t.title}</h2>
               <p className="text-gray-600">{t.description}</p>
               <div className="flex justify-between items-center">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  t.priority === 'high' ? 'bg-red-100 text-red-800' :
-                  t.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-green-100 text-green-800'
-                }`}>
-                  {t.priority}
-                </span>
+                <div>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${t.priority === 'high' ? 'bg-red-100 text-red-800' :
+                    t.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-green-100 text-green-800'
+                    }`}>
+                    {t.priority}
+                  </span>
+                </div>
+                <div>
+                  <button
+                    onClick={() => handleDelete(t.id)}
+                    className='bg-red-400 border rounded-lg p-1 text-white cursor-pointer'
+                  >
+                    Borrar
+                  </button>
+                </div>
               </div>
+
             </div>
           ))
         )}
