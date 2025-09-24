@@ -62,11 +62,11 @@ const HomePage = () => {
                 <p className="text-gray-600">{t.description}</p>
                 <div className="flex justify-between items-center">
                   <div>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${t.priority === 'high' ? 'bg-red-100 text-red-800' :
-                      t.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${t.priorityTask === 'High' ? 'bg-red-100 text-red-800' :
+                      t.priorityTask === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
                         'bg-green-100 text-green-800'
                       }`}>
-                      {t.priority}
+                      {t.priorityTask}
                     </span>
                   </div>
 

@@ -6,6 +6,7 @@ const Form = ({ taskId }) => {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [priorityTask, setpriorityTask] = useState("");
 
 
     useEffect(() => {
@@ -14,6 +15,7 @@ const Form = ({ taskId }) => {
                 const response = await axiosPublic.get(`/task/${taskId}`);
                 setTitle(response.data.title);
                 setDescription(response.data.description);
+                setpriorityTask(response.data.priorityTask);
             } catch (error) {
                 console.error("Error al obtener la tarea:", error);
             }
@@ -31,11 +33,13 @@ const Form = ({ taskId }) => {
                 await axiosPublic.put(`/task/${taskId}`, {
                     title,
                     description,
+                    priorityTask
                 });
             } else {
                 await axiosPublic.post("/createTask", {
                     title,
-                    description
+                    description,
+                    priorityTask
                 });
             }
             navigate("/");
@@ -80,6 +84,23 @@ const Form = ({ taskId }) => {
 
                 />
             </div>
+
+            <div className='flex flex-col gap-1'>
+                <label className='font-medium'>
+                    Prioridad de la tarea:
+                </label>
+                <select
+                    name="priorityTask"
+                    value={priorityTask}
+                    onChange={(e) => setpriorityTask(e.target.value)}
+                    className='px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400'
+                >
+                    <option value='High'>High</option>
+                    <option value='Medium'>Medium</option>
+                    <option value='Low'>Low</option>
+                </select>
+            </div>
+
             <div className="flex justify-end">
                 <button
                     type="submit"
