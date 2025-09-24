@@ -43,7 +43,7 @@ const HomePage = () => {
           <h1 className="text-3xl font-bold text-gray-800">Listado de Tareas</h1>
           <div>
             <button
-            className='border rounded-lg bg-blue-400 p-1 cursor-pointer'
+            className='border rounded-lg bg-blue-400 p-2 cursor-pointer text-white'
             onClick={()=> navigate('/create-task')}
             >
               Agregar nueva tarea
@@ -72,7 +72,7 @@ const HomePage = () => {
                   <div>
                     <button
                       onClick={() => handleDelete(t.id)}
-                      className='bg-red-400 border rounded-lg p-1 text-white cursor-pointer'
+                      className='bg-red-400 border rounded-lg p-2 text-white cursor-pointer'
                     >
                       Borrar
                     </button>
