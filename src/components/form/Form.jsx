@@ -1,26 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axiosPublic from "../../service/axiosPublic";
 import { useNavigate } from "react-router-dom";
 
-const Form = () => {
+const Form = ({ taskId }) => {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+
+
+    useEffect(() => {
+        const fetchTask = async () => {
+            try {
+                const response = await axiosPublic.get(`/task/${taskId}`);
+                setTitle(response.data.title);
+                setDescription(response.data.description);
+            } catch (error) {
+                console.error("Error al obtener la tarea:", error);
+            }
+        };
+
+        if (taskId) fetchTask();
+    }, [taskId]);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const res = await axiosPublic.post("/createTask", {
-                title,
-                description
-            });
-            console.log("tarea creada", res.data);
+            if (taskId) {
+                await axiosPublic.put(`/task/${taskId}`, {
+                    title,
+                    description,
+                });
+            } else {
+                await axiosPublic.post("/createTask", {
+                    title,
+                    description
+                });
+            }
             navigate("/");
         } catch (error) {
             console.error("error creando tarea: ", error)
         }
+
     };
 
 
@@ -63,7 +85,8 @@ const Form = () => {
                     type="submit"
                     className="border rounded-lg bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 transition-colors"
                 >
-                    Enviar
+                    {taskId ? 'Actualizar' : 'Agregar'}
+
                 </button>
             </div>
         </form>

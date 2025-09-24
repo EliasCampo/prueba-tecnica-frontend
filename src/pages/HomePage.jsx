@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react"
 import axiosPublic from "../service/axiosPublic"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [task, setTask] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchTask = async () => {
       try {
         const response = await axiosPublic.get("/tasks");
-        console.log(response.data);
         setTask(response.data);
       } catch (err) {
         setError(err.message);
@@ -22,7 +22,7 @@ const HomePage = () => {
     };
 
     fetchTask();
-  }, []);
+  }, [location.pathname]);
 
   const handleDelete = async (id) => {
     try {
@@ -43,8 +43,8 @@ const HomePage = () => {
           <h1 className="text-3xl font-bold text-gray-800">Listado de Tareas</h1>
           <div>
             <button
-            className='border rounded-lg bg-blue-400 p-2 cursor-pointer text-white'
-            onClick={()=> navigate('/create-task')}
+              className='border rounded-lg bg-blue-400 p-2 cursor-pointer text-white'
+              onClick={() => navigate('/create-task')}
             >
               Agregar nueva tarea
             </button>
@@ -69,13 +69,24 @@ const HomePage = () => {
                       {t.priority}
                     </span>
                   </div>
-                  <div>
-                    <button
-                      onClick={() => handleDelete(t.id)}
-                      className='bg-red-400 border rounded-lg p-2 text-white cursor-pointer'
-                    >
-                      Borrar
-                    </button>
+
+                  <div className='flex gap-2'>
+                    <div>
+                      <button
+                        onClick={() => navigate(`/edit-task/${t.id}`)}
+                        className='bg-yellow-500 border rounded-lg p-2 text-white cursor-pointer'
+                      >
+                        Editar
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => handleDelete(t.id)}
+                        className='bg-red-400 border rounded-lg p-2 text-white cursor-pointer'
+                      >
+                        Borrar
+                      </button>
+                    </div>
                   </div>
                 </div>
 

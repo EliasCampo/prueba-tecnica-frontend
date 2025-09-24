@@ -9,6 +9,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/create-task" element={<CreateTask />} />
+        <Route path="/edit-task/:id" element={<CreateTask />} />
         <Route path="*" element={<p>Pagina no encontrada</p>} />
       </Routes>
     </BrowserRouter>
