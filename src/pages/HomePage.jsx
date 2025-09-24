@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import axiosPublic from "../service/axiosPublic"
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify"
+
 const HomePage = () => {
   const [task, setTask] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,6 +30,11 @@ const HomePage = () => {
     try {
       await axiosPublic.delete(`/task/${id}`);
       setTask((prev) => prev.filter((t) => t.id !== id));
+      toast.success("Tarea eliminada correctamente", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark"
+      })
     } catch (err) {
       console.log('error al eliminar la tarea')
     }

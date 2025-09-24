@@ -1,6 +1,9 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import HomePage from '../pages/HomePage.jsx'
-import CreateTask from '../pages/CreateTask.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from '../pages/HomePage.jsx';
+import CreateTask from '../pages/CreateTask.jsx';
+
+
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
@@ -12,6 +15,7 @@ const App = () => {
         <Route path="/edit-task/:id" element={<CreateTask />} />
         <Route path="*" element={<p>Pagina no encontrada</p>} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   )
 }

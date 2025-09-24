@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import axiosPublic from "../../service/axiosPublic";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify"
+
 const Form = ({ taskId }) => {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [priorityTask, setpriorityTask] = useState("");
+    const [priorityTask, setpriorityTask] = useState("High");
 
 
     useEffect(() => {
@@ -35,16 +37,31 @@ const Form = ({ taskId }) => {
                     description,
                     priorityTask
                 });
+                toast.success("Tarea editada correctamente", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    theme: "dark"
+                })
             } else {
                 await axiosPublic.post("/createTask", {
                     title,
                     description,
                     priorityTask
                 });
+                toast.success("Tarea creada correctamente", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    theme: "dark"
+                })
             }
             navigate("/");
         } catch (error) {
-            console.error("error creando tarea: ", error)
+            console.error("error creando tarea: ", error);
+            toast.error("Error al guardar la tarea", {
+                position: "top-right",
+                autoClose: 3000,
+                theme: "dark"
+            });
         }
 
     };
@@ -55,7 +72,6 @@ const Form = ({ taskId }) => {
         <form
             onSubmit={handleSubmit}
             className="flex flex-col w-full max-w-2xl bg-white border border-gray-200 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow gap-4"
-
         >
             <div className='flex flex-col gap-1'>
                 <label className="font-medium">
